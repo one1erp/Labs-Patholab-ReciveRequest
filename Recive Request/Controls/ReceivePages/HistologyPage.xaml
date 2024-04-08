@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="Recive_Request.Controls.ReceivePages.HistologyPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+
+             mc:Ignorable="d"  FlowDirection="RightToLeft" IsVisibleChanged="HistologyPage_OnIsVisibleChanged" 
+         
+           >
+    <UserControl.Resources>
+
+
+
+        <Style TargetType="ComboBox">
+            <Setter Property="IsEditable" Value="True"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="IsSynchronizedWithCurrentItem" Value="False"></Setter>
+
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style TargetType="xctk:DateTimePicker">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="Format" Value="ShortDate"></Setter>
+
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style x:Key="DataGridContentCellCentering" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Background" Value="White"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style TargetType="Grid" x:Key="innerGrid">
+            <Setter Property="Background" Value="Lavender"></Setter>
+            <Setter Property="Margin" Value="4"></Setter>
+        </Style>
+        <Style   TargetType="Button">
+            <Setter Property="Margin" Value="6"></Setter>
+
+        </Style>
+        <Style TargetType="Grid" >
+            <Setter Property="Background" Value="Lavender"></Setter>
+            <Setter Property="Margin" Value="6"></Setter>
+        </Style>
+
+
+    </UserControl.Resources>
+    <Grid x:Name="HisMainGrid" VerticalAlignment="Top"     HorizontalAlignment="Center"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" ></ColumnDefinition>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" />
+
+        </Grid.ColumnDefinitions>
+        <TextBlock  x:Name="lblHeader" TextDecorations="Underline" FontSize="25" Text="היסטולוגיה" HorizontalAlignment="Center"  VerticalAlignment="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"  Grid.Column="2"  />
+
+
+        <TextBlock   Text="פתולוג מיועד" VerticalAlignment="Top"  Grid.Column="3" Grid.Row="3"/>
+        <TextBlock  Text="תאריך הפנייה" VerticalAlignment="Top"  Grid.Row="3" />
+        <TextBlock  Text="פירוט הדגימות" VerticalAlignment="Top"  Grid.Row="1" TextDecorations="Underline" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="lblRecivedContainer" Text="התקבלו X/Y צנצנות מתוך קבלת המשלוח"  Margin="8"  Background="Yellow" Grid.Column="2"  Grid.Row="1"  />
+        <DataGrid x:Name="dg"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" VerticalAlignment="Top"
+               CanUserSortColumns="False"  LoadingRow="Dg_OnLoadingRow" Loaded="Dg_OnLoaded_"
+    		AlternatingRowBackground="Gainsboro"  ItemsSource="{Binding SampleDetailses}"
+             AutoGenerateColumns="False"    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"             
+   Height="Auto"  Grid.ColumnSpan="5" Grid.Row="5" Margin="0,3,3,0"  RowHeight="44">
+            <DataGrid.Resources>
+
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="txtMarkAs" Binding="{Binding MarkAs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="מסומנת כ -" MinWidth="200">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center" />
+                            <Setter Property="Height" Value="30" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="txtAstNbr" Binding="{Binding AssutaNbr,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="מס' אסותא" MinWidth="200">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center" />
+                            <Setter Property="Height" Value="30" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn x:Name="comboOrgan" Header="איבר" Width="250" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding OrganName}" VerticalAlignment="Center" HorizontalAlignment="Center"  TextAlignment="Center" ></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate >
+                            <ComboBox x:Name="cmbOrgans"  
+                                  SelectedValue="{Binding OrganName}" 
+                              IsEditable="True" IsEnabled="True" DisplayMemberPath="U_ORGAN_HEBREW_NAME" SelectedValuePath="U_ORGAN_HEBREW_NAME" 
+                                          ItemsSource="{Binding Path=ListOrgans, RelativeSource={RelativeSource Mode=FindAncestor,
+                                    AncestorType={x:Type UserControl}}}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="כמות קסטות">
+
+
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock  Text="{Binding NumOfBlocks,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="nbl" VerticalAlignment="Center" HorizontalAlignment="Center"  TextAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <xctk:IntegerUpDown Minimum="1"  Value="{Binding NumOfBlocks,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="nbl"  TextAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="עמודת מדפסת" Width="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PrinterColName}" VerticalAlignment="Center" HorizontalAlignment="Center"  TextAlignment="Center" ></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox  IsEditable="False"  
+                                    SelectedValuePath="PHRASE_NAME"  DisplayMemberPath="PHRASE_DESCRIPTION"
+                                          ItemsSource="{Binding Path=PrinterColumns,
+                    RelativeSource={RelativeSource Mode=FindAncestor,
+                    AncestorType={x:Type UserControl}}}"
+                                       SelectedValue="{Binding PrinterCol,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                       ></ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnPrintCst" Click="BtnPrintCst_OnClick"  Width="30" Height="30">
+                                <StackPanel>
+                                    <Image Source="C:\Program Files (x86)\Thermo\Nautilus\Resource\workflow_report.ico" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <xctk:DateTimePicker x:Name="dtRequestDate" FontSize="20" HorizontalAlignment="Left" 
+                             VerticalAlignment="Center" MinWidth="210" AllowTextInput="False" 
+                             Grid.Column="1" Grid.Row="3" ValueChanged="DtRequestDate_OnValueChanged" Margin="3,0,0,3" />
+        <Label Name="lbdt" Grid.Column="1" Grid.Row="4"  Foreground="Red" FontSize="11" Width="210"></Label>
+
+        <ComboBox x:Name="cmpPatholog" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"  Grid.Column="4" Grid.Row="3"/>
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock  Text="כמות צנצנות"  />
+            <xctk:IntegerUpDown Focusable="True" x:Name="numSamplesdd" FontSize="20"  Margin="15,0,0,0" Minimum="1" Maximum="99" 
+                           Width="64" ValueChanged="NumSamplesdd_OnValueChanged"  />
+        </StackPanel>
+    </Grid>
+</UserControl>

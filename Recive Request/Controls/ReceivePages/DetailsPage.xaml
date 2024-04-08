@@ -1,0 +1,271 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:wf="clr-namespace:RequestRemarkNet;assembly=RequestRemarkNet"
+
+             xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid" xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Class="Recive_Request.Controls.ReceivePages.DetailsPage"
+             mc:Ignorable="d"  FlowDirection="RightToLeft"  Loaded="DetailsPage_OnLoaded">
+
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Grid}" x:Key="innerGrid">
+            <Setter Property="Background" Value="Lavender"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="IsThreeState" Value="False"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="IsSynchronizedWithCurrentItem" Value="False"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Text" Value=""/>
+        </Style>
+        <Style TargetType="{x:Type xctk:DateTimePicker}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Text" Value=""/>
+            <Setter Property="Format" Value="ShortDate"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style   TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="6"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="MainGrid" ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Style="{StaticResource innerGrid}"  >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="גורם משלם"/>
+            <TextBlock Text="גורם שולח" Grid.Row="1"/>
+            <TextBlock Text="מבטח נוסף" Grid.Row="2"/>
+            <TextBlock Text="הפניה/התחיבות"  Grid.Row="3"/>
+            <TextBox Grid.Column="1" Grid.Row="3" x:Name="txtAccordNbr"  Grid.ColumnSpan="2" IsEnabled="{Binding cbObligation}"/>
+            <TextBox Grid.Column="1" Grid.Row="4" x:Name="txtHospitalNbr" PreviewTextInput="NumberValidationTextBox"/>
+            <TextBlock Text="מס' אישפוז"  Grid.Row="4"  />
+            <TextBlock Text="דחיפות"  Grid.Row="5"/>
+            <ComboBox IsEditable="False"   x:Name="cmbPriority" Grid.Column="1" Grid.Row="5"/>
+            <CheckBox x:Name="cbObligation"  Content="הפניה ללא התחיבות" Grid.Row="3" Grid.Column="3"  Grid.ColumnSpan="2" VerticalAlignment="Top"   Click="cbObligation_Click" Checked="cbObligation_Checked"/>
+            <CheckBox x:Name="cbInAdvance"   Content="התקבל תשלום"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" VerticalAlignment="Top" HorizontalAlignment="Right"  Width="221"/>
+            <Expander Grid.Row="4" Grid.Column="4" Grid.RowSpan="3" Margin="2"  HorizontalAlignment="Right" IsExpanded="{Binding ElementName=cbInAdvance, Path=IsChecked}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition />
+
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="סוג תשלום" />
+                    <TextBlock Text="סכום" Grid.Column="0" Grid.Row="1" />
+                    <ComboBox IsEditable="False"   x:Name="cmbPayType" Grid.Column="1" Grid.Row="0"/>
+                    <xctk:DecimalUpDown x:Name="numAmount" Grid.Row="1"   Grid.Column="1"/>
+
+
+
+
+                </Grid>
+            </Expander>
+            <TextBox Grid.Column="3"   x:Name="txtSigns" MinWidth="33" Width="Auto"  HorizontalAlignment="Left" IsReadOnly="True" FlowDirection="LeftToRight"/>
+            <ComboBox IsEditable="True" x:Name="cmbCustomer" Grid.Column="1" Grid.ColumnSpan="2"  LostFocus="CmbCustomer_OnLostFocus" KeyDown="Cmb_OnKeyDown" PreviewGotKeyboardFocus="ToHebrew">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <ComboBox IsEditable="True" x:Name="cmbClinic"  KeyDown="Cmb_OnKeyDown"  
+                      Grid.Row="1" Grid.Column="2" 
+                    SelectionChanged="CmbClinic_OnSelectionChanged" 
+                      DisplayMemberPath="NAME"  Grid.ColumnSpan="2">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <ComboBox x:Name="cmbClinicCode"  IsEditable="True" Grid.Column="1" Grid.Row="1" 
+                      DisplayMemberPath="U_CLINIC_USER.U_CLINIC_CODE" 
+     SelectionChanged="CmbClinic_OnSelectionChanged">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <ComboBox IsEditable="True" x:Name="cmbSecondCustomer" Grid.Column="1" Grid.Row="2" KeyDown="Cmb_OnKeyDown"  Grid.ColumnSpan="2">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Column="1" Style="{StaticResource innerGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="31*"  />
+                <RowDefinition Height="38*"  />
+                <RowDefinition Height="38*"  />
+                <RowDefinition Height="38*"  />
+                <RowDefinition Height="38.4"  />
+                <RowDefinition Height="36*"  />
+                <RowDefinition Height="38*"  />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition  Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="פרטי נבדק" Grid.Column="1"  FontSize="19" TextDecorations="Underline" TextAlignment="Center" />
+            <TextBlock Text="ת.זהות" Grid.Row="2"  />
+            <CheckBox x:Name="cbPasport" Grid.Row="1"  Content="דרכון" Checked="CbPasport_OnChecked" />
+            <TextBlock  Grid.Column="0" Grid.Row="4" ><Run Text="טלפון"/></TextBlock>
+            <Label x:Name="lblErr" Grid.Column="0" Grid.Row="5" Foreground="Red"/>
+            <TextBox MinWidth="80" x:Name="txtClientPhone" Grid.Row="4" Grid.Column="1"/>
+            <TextBox x:Name="txtClientIdentity" Grid.Column="1" Grid.Row="2" PreviewKeyDown ="txtClientIdentity_KeyDown"  />
+            <TextBox x:Name="txtLastName" Grid.Column="4" Grid.Row="1" />
+            <TextBox x:Name="txtFirtName" Grid.Column="4" Grid.Row="3" />
+            <TextBlock Text="שם משפחה" Grid.Column="2" Grid.Row="1" />
+            <TextBlock Text="שם פרטי" Grid.Column="2" Grid.Row="3" />
+            <TextBlock Text="ת.לידה" Grid.Column="2" Grid.Row="5"/>
+            <!--<TextBlock  Grid.Column="4" Grid.Row="3"/>-->
+            <TextBlock Text="גיל" Grid.Column="2" Grid.Row="4" />
+            <TextBlock x:Name="ageMsg" Text="גיל אינו תואם תאריך לידה" Grid.Column="2" Grid.Row="4" FontSize="8"
+                       HorizontalAlignment="Right" Background="SandyBrown" Visibility="Hidden" />
+            <xctk:DecimalUpDown Width="55"   FontSize="20"  IsReadOnly="False" Grid.Column="4" 
+				HorizontalAlignment="Right" Grid.Row="4" x:Name="txtAge" Margin="3" Minimum="0" Maximum="199"  
+                                PreviewTextInput="TxtAge_OnPreviewTextInput" ValueChanged="TxtAge_OnValueChanged" LostFocus="txtAge_LostFocus" />
+            <TextBlock Text="מין" Grid.Column="2" Grid.Row="6" />
+            <ComboBox IsEditable="False" x:Name="cmbGender"  Grid.Column="4" Grid.Row="6" />
+            <xctk:DateTimePicker   x:Name="dtDateBirth" Grid.Column="3"  Grid.Row="5"  VerticalAlignment="Top"  
+                                   ValueChanged="DtDateBirth_OnValueChanged" TimePickerVisibility="Hidden" UpdateValueOnEnterKey="True" 
+                                   Format="ShortDate"  />
+
+            <TextBox x:Name="txtPrevLastName" Grid.Column="4" Grid.Row="2" />
+
+            <TextBlock Text="שם משפחה קודם" Grid.Column="2" Grid.Row="2" />
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource innerGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition  />
+                <ColumnDefinition  />
+                <ColumnDefinition  />
+                <ColumnDefinition  />
+                <ColumnDefinition  />
+
+                <ColumnDefinition  />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="רופא מבצע" Grid.ColumnSpan="1" Height="27" Margin="3,6" />
+            <TextBlock Text="רופא מפנה" Grid.Row="1" Grid.ColumnSpan="1" Height="27" Margin="3,6"/>
+
+            <TextBlock Text="מרפאה" Grid.Row="2" />
+
+            <ComboBox IsEditable="True" x:Name="CmbreferringClinic_code" Grid.Column="1" Grid.Row="2"   DisplayMemberPath="U_CLINIC_USER.U_CLINIC_CODE" SelectionChanged="CmbreferringClinic_OnSelectionChanged" >
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <ComboBox IsEditable="True" x:Name="CmbreferringClinic" Grid.Column="2" Grid.Row="2"  Grid.ColumnSpan="2"   DisplayMemberPath="NAME" KeyDown="Cmb_OnKeyDown"  SelectionChanged="CmbreferringClinic_OnSelectionChanged" >
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <TextBox x:Name="textImplementingphysician" Grid.Column="1" KeyDown="textImplementingphysician_KeyDown" TextChanged="physician_TextChanged"/>
+            <!--LostFocus="physician_LostFocus"-->
+
+
+            <ComboBox IsEditable="True"  x:Name="Cmb_FN_Implementingphysician"                   
+                      SelectionChanged="Phyisician_OnSelectionChanged"
+                 KeyDown="Cmb_OnKeyDown"   Grid.Row="0" Grid.Column="2">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <TextBox x:Name="textReferringphysician" Grid.Row="1" Grid.Column="1" KeyDown="textImplementingphysician_KeyDown" TextChanged="physician_TextChanged"></TextBox>
+
+            <ComboBox IsEditable="True"  x:Name="Cmb_FN_Referringphysician" 
+                  KeyDown="Cmb_OnKeyDown"    Grid.Row="1" Grid.Column="2" SelectionChanged="Phyisician_OnSelectionChanged">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Button x:Name="btnAddSupplier" Grid.Row="0" Grid.RowSpan="2" Content="הוספת רופא" Click="BtnAddSupplier_OnClick"  VerticalAlignment="Center"  Grid.Column="3" FontSize="20" />
+            <WindowsFormsHost x:Name="hostRemarks" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
+            
+        </Grid>
+    </Grid>
+
+</UserControl>

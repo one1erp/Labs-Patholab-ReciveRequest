@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Recive_Request.Controls.ReceivePages.PapPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"  FlowDirection="RightToLeft"
+        >
+    <UserControl.Resources>
+        <Style TargetType="xctk:DateTimePicker">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="Format" Value="ShortDate"></Setter>
+        </Style>
+        <Style TargetType="xctk:IntegerUpDown">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="Minimum" Value="1"></Setter>
+            <Setter Property="Maximum" Value="10"></Setter>
+
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+
+
+
+
+        <Style TargetType="Grid" >
+            <Setter Property="Background" Value="Lavender"></Setter>
+            <Setter Property="Margin" Value="6"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="MainPapGrid" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="lblRecivedContainer" Text="התקבלו X/Y צנצנות מתוך קבלת המשלוח"    Background="Yellow" Grid.Column="2"  Grid.Row="1"  />
+        <TextBlock x:Name="lblHeader" TextDecorations="Underline" FontSize="25" Text="פאפ" HorizontalAlignment="Center"  VerticalAlignment="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"  Grid.ColumnSpan="4"  />
+       
+        <TextBlock  Grid.Row="2" Grid.Column="2"  Text="       תאריך הפנייה" HorizontalAlignment="Right"></TextBlock>
+        <TextBlock x:Name="tbAss" Grid.Row="3" Grid.Column="2"  Text="מס' אסותא" HorizontalAlignment="Right"></TextBlock>
+        <TextBlock x:Name="tb1" Grid.Row="3" Grid.Column="0"  Text="כמות Pap smear סלייד" ></TextBlock>
+        <TextBlock x:Name="tb2" Grid.Row="4" Grid.Column="0"  Text="כמות LBC סלייד" ></TextBlock>
+        <TextBlock x:Name="tb3" Grid.Row="5" Grid.Column="0"  Text="כמות HPV סלייד" />
+
+        <Label Name="lbdt"  Grid.Row="3" Grid.Column="3"   Foreground="Red" FontSize="11"></Label>
+
+
+        <xctk:DateTimePicker Name="dtRequestDatePap" AllowTextInput="False" Grid.Row="2" Grid.Column="3" MinWidth="222" ValueChanged="DtRequestDatePap_OnValueChanged"/>
+        <TextBox Name="txtAstNum"  Grid.Row="3" Grid.Column="3"   MinWidth="222" />
+        <!--<xctk:DateTimePicker Name="dtRequestDatePap"  Grid.Row="1" Grid.Column="1" MinWidth="222"/>-->
+
+        <xctk:IntegerUpDown x:Name="uidSmear" Grid.Row="3" Grid.Column="1" MinWidth="55"/>
+        <xctk:IntegerUpDown x:Name="uidLbc" Grid.Row="4" Grid.Column="1" />
+        <xctk:IntegerUpDown x:Name="uidHpv"  Grid.Row="5" Grid.Column="1" />
+       
+        <StackPanel  Grid.Row="4" Grid.Column="2" x:Name="spDisplayMode" IsEnabled="False">
+            <TextBlock   Text="כמות  סליידים" />
+            <xctk:IntegerUpDown x:Name="sumAliq"  IsEnabled="False" />
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>
